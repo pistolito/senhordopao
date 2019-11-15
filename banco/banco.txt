@@ -1,242 +1,266 @@
 create table
-	venda (codigo serial not null,	
-	cliente int4 not null,
-	datavenda timestamp not null,
-	valor numeric(7,2) not null,
-	primary key (codigo));
+	cargo (cod serial not null,
+	func varchar(30) not null,
+	salario numeric(8,2) ,
+	primary key (cod));
 
 create table
-	cargo (codigo serial not null,
-	funcao varchar(30) not null,
-	salario numeric(8,2),
-	primary key (codigo));
-
-create table
-	compra (codigo serial not null,
+	compra (codcom serial not null,
 	cnpj int4 not null,
-	datacompra timestamp not null,
+	datcom timestamp not null,
 	valor numeric(7,2) not null,
-	primary key (codigo));
+	primary key (codcom));
 
 create table
-	compraingrediente (codigo int4 not null,
-	ingrediente int4 not null,
-	quantidade numeric(9,2) not null,
+	compra_ingrediente (codcom int4 not null,
+	ingrcod int4 not null,
+	qnt numeric(9,2) not null,
 	valor numeric(7,2) not null,
-	primary key (codigo,ingrediente));
+	primary key (codcom,ingrcod));
 
 create table
 	fornecedor (cnpj serial not null,
-	razaosocial varchar(100) not null,
+	nom varchar(100) not null,
 	rua varchar(50) not null,
 	bairro varchar(20) not null,
-	numeroendereco numeric(4) not null,
+	endnum numeric(4) not null,
 	cep numeric(8) not null,
-	referencia varchar(50),
-	datacadastro timestamp not null,
-	dataexclusao timestamp default null,
-	datafundacao date,
+	endref varchar(50),
+	datcad timestamp not null,
+	datex timestamp default null,
+	exc numeric(1) default (0),
+	datfun date,
 	primary key (cnpj));
 
 create table
-	ingrediente (codigo serial not null,
+	ingrediente (cod serial not null,
 	peso numeric(8,4) not null,
-	valor numeric(7,2) not null,
-	nome varchar(50) not null,
-	quantidade numeric(8,4) not null,
-	datacadastro timestamp not null,
-	dataexclusao timestamp default null,
-	primary key (codigo));
+	custo numeric(7,2) not null,
+	nom varchar(50) not null,
+	qnt numeric(8,4) not null,
+	datcad timestamp not null,
+	datex timestamp default null,
+	exc numeric(1) default (0),
+	primary key (cod));
 
 create table
-	ingredientereceita (codigo int4 not null,
-	nome varchar(50) not null,
-	ingrediente int4 not null,
-	nomeingrediente varchar(50) not null,
-	dataproducao timestamp not null,
-	quantidade numeric(8,4) not null,
-	primary key (codigo,ingrediente));
+	ingrediente_receita (procod int4 not null,
+	nom varchar(50) not null,
+	ingrcod int4 not null,
+	nomingr varchar(50) not null,
+	dat timestamp not null,
+	qnt numeric(8,4) not null,
+	primary key (procod,ingrcod));
 
 create table
-	pessoa (codigo serial not null,
-	nome varchar(100) not null,
+	pessoa (cod serial not null,
+	nom varchar(100) not null,
 	cpf int4 not null,
-	data_nascimento date not null,
-	data_cadastro timestamp not null,
-	data_exclusao timestamp default null,
-	cargo int4 default(5),
-	primary key (codigo));
+	datnasc date not null,
+	datcad timestamp not null,
+	datex timestamp default null,
+	exc numeric(1) default (0),
+	cargocod int4 default(5),
+	constraint código primary key (cod));
 
 comment on
 table
 	pessoa is 'tabela referente ao cadastro de pessoas.';
 
 create table
-	produto (codigo serial not null,
-	valor numeric(7,2) not null,
+	produto (procod serial not null,
+	preco numeric(7,2) not null,
 	peso numeric(9,4) not null,
-	nome varchar(50) not null,
-	datacadastro timestamp not null,
-	dataexclusao timestamp default null,
-	primary key (codigo));
+	nom varchar(50) not null,
+	datcad timestamp not null,
+	datex timestamp default null,
+	exc numeric(1) default (0),
+	primary key (procod));
 
 create table
-	receita (codigo int4 not null,
-	ingrediente int4 not null,
-	quantidade numeric(8,4) not null,
-	valor numeric(7,2) not null,
-	dataexclusao timestamp default null,
-	primary key (codigo));
+	receita (procod int4 not null,
+	ingrcod int4 not null,
+	qnt numeric(8,4) not null,
+	custo numeric(7,2) not null,
+	datex timestamp default null,
+	exc numeric(1) default (0),
+	primary key (procod));
 
 create table
-	vendaproduto (codigo int4 not null,
-	produto int4 not null,
-	quantidade numeric(9,4) not null,
+	venda (codven serial not null,	
+	pessoacod int4 not null,
+	datven timestamp not null,
 	valor numeric(7,2) not null,
-	primary key (codigo,produto));
+	constraint codvend primary key (codven));
+
+create table
+	venda_produto (codven int4 not null,
+	procod int4 not null,
+	qnt numeric(9,4) not null,
+	valor numeric(7,2) not null,
+	primary key (codven,procod));
 
 alter table
-	ingredientereceita add constraint fkingredient390474 foreign key (codigo) references receita (codigo);
+	ingrediente_receita add constraint fkingredient390474 foreign key (procod) references receita (procod);
 
 alter table
-	ingredientereceita add constraint fkingredient489107 foreign key (ingrediente) references ingrediente (codigo);
+	ingrediente_receita add constraint fkingredient489107 foreign key (ingrcod) references ingrediente (cod);
 
 alter table
-	receita add constraint fkreceita489384 foreign key (codigo) references produto (codigo);
+	receita add constraint fkreceita489384 foreign key (procod) references produto (procod);
 
 alter table
-	compraingrediente add constraint fkcompra_ing819289 foreign key (codigo) references ingrediente (codigo);
+	compra_ingrediente add constraint fkcompra_ing819289 foreign key (ingrcod) references ingrediente (cod);
 
 alter table
-	compraingrediente add constraint fkcompra_ing721886 foreign key (codigo) references compra (codigo);
+	compra_ingrediente add constraint fkcompra_ing721886 foreign key (codcom) references compra (codcom);
 
 alter table
 	compra add constraint fkcompra29064 foreign key (cnpj) references fornecedor (cnpj);
 
 alter table
-	vendaproduto add constraint fkvenda_prod518759 foreign key (produto) references produto (codigo);
+	venda_produto add constraint fkvenda_prod518759 foreign key (procod) references produto (procod);
 
 alter table
-	vendaproduto add constraint fkvenda_prod323336 foreign key (codigo) references venda (codigo);
+	venda_produto add constraint fkvenda_prod323336 foreign key (codven) references venda (codven);
 
 alter table
-	venda add constraint fkvenda813640 foreign key (cliente) references pessoa (codigo);
+	venda add constraint fkvenda813640 foreign key (pessoacod) references pessoa (cod);
 
 alter table
-	pessoa add constraint fkpessoa831278 foreign key (cargo) references cargo (codigo);
+	pessoa add constraint fkpessoa831278 foreign key (cargocod) references cargo (cod);
 
 comment on
 table
-	vendaproduto is 'tabela referente aos produtos de cada venda.';
+	venda_produto is 'tabela referente aos produtos de cada venda.';
 
 insert
 	into
-		cargo(funcao,salario)
+		cargo(func,salario)
 	values
 		('dono',5000);
 
 insert
 	into
-		cargo(funcao,salario)
+		cargo(func,salario)
 	values
 		('gerente',5000);
 
 insert
 	into
-		cargo(funcao,salario)
+		cargo(func,salario)
 	values
 		('padeiro',3500);
 
 insert
 	into
-		cargo(funcao,salario)
+		cargo(func,salario)
 	values
         ('atendente',1500);
 
 insert 
     into 
-        cargo(funcao, salario) 
+        cargo(func, salario) 
     values 
         ('cliente', 0); 
 
 insert
 	into
-		pessoa(nome,cpf,data_nascimento,data_cadastro,codigo)
+		pessoa(nom,cpf,datnasc,datcad,cargocod)
 	values
 		('joao',123456789,'03.05.1997','03.05.1997',1);
 	
 insert
 	into
-		fornecedor (cnpj,razaosocial,rua,bairro,numeroendereco,cep,datacadastro,datafundacao)
+		public.fornecedor (cnpj,nom,rua,bairro,endnum,cep,datcad,datfun)
 	values
 		(123456789,'teste normal','rua rua','banana',666,89900000,'26.05.2019','26.05.2019');
 	
 insert
 	into
-		fornecedor (cnpj,razaosocial,rua,bairro,numeroendereco,cep,datacadastro,dataexclusao,datafundacao)
+		public.fornecedor (cnpj,nom,rua,bairro,endnum,cep,datcad,datex,datfun)
 	values
 		(987654321,'teste excluido','nao rua','burraco',123,98765432,'25.05.2019',current_timestamp,'25.05.2019');
 	
 insert
 	into
-		produto (valor,peso,nome,datacadastro)
+		public.produto (preco,peso,nom,datcad)
 	values 
 		(5,5,'teste normal','26.05.2019');
 
 insert
 	into
-		produto (valor,peso,nome,datacadastro,dataexclusao)
+		public.produto (preco,peso,nom,datcad,datex)
 	values 
 		(6,6,'teste excluido','26.05.2019', current_timestamp);
 	
 insert
 	into
-		ingrediente (peso,valor,nome,quantidade,datacadastro)
+		public.ingrediente (peso,custo,nom,qnt,datcad)
 	values
 		(0.500,5,'teste normal',100,'26.05.2019');
 	
 insert
 	into
-		ingrediente (peso,valor,nome,quantidade,datacadastro,dataexclusao)
+		public.ingrediente (peso,custo,nom,qnt,datcad,datex)
 	values
 		(1.500,5,'teste excluido',150,'26.05.2019',current_timestamp);
 	
 insert
 	into 
-		venda (codigo,cliente,datavenda,valor)
+		venda (pessoacod,codven,datven,valor)
 	values
 		(1,1,current_timestamp,50);
-
-CREATE TABLE tipousuario (
-	codigo serial NOT NULL, 
-	tipousuario varchar(20) NOT NULL, 
-	PRIMARY KEY (codigo)
-);
-COMMENT ON TABLE tipousuario IS 'Cadastro dos tipos de usuários: 1 - Admin, 2 - Operador, 3 - Consulta.';
-
-
-
-ALTER TABLE tipousuario OWNER TO postgres;
-GRANT ALL ON TABLE tipousuario TO postgres;
 	
-CREATE TABLE usuario (
-	codigo serial NOT NULL, 
-	nome varchar(40) NOT NULL, 
-	email varchar(100) NOT NULL, 
-	senha varchar(32) NOT NULL, 
-	tipousuario int4 NOT NULL, 
-	UNIQUE (email),
-	PRIMARY KEY (codigo),
-	CONSTRAINT fkusuario980722 FOREIGN KEY (codigo) REFERENCES tipousuario(codigo)
+-- DROP TABLE public.tipo_usuario;
+
+CREATE TABLE public.tipo_usuario (
+	codtipusu serial NOT NULL, -- Código do tipo de usuário.
+	destipusu varchar(20) NOT NULL, -- Descrição do tipo de usuário.
+	CONSTRAINT tipo_usuario_pkey PRIMARY KEY (codtipusu)
 );
+COMMENT ON TABLE public.tipo_usuario IS 'Cadastro dos tipos de usuários: 1 - Admin, 2 - Operador, 3 - Consulta.';
 
+-- Column comments
 
-ALTER TABLE usuario OWNER TO postgres;
-GRANT ALL ON TABLE usuario TO postgres;
+COMMENT ON COLUMN public.tipo_usuario.codtipusu IS 'Código do tipo de usuário.';
+COMMENT ON COLUMN public.tipo_usuario.destipusu IS 'Descrição do tipo de usuário.';
+
+-- Permissions
+
+ALTER TABLE public.tipo_usuario OWNER TO postgres;
+GRANT ALL ON TABLE public.tipo_usuario TO postgres;
 	
-INSERT INTO tipousuario (codigo,tipousuario)
+CREATE TABLE public.usuario (
+	codusu serial NOT NULL, -- Código do usuário.
+	nomusu varchar(40) NOT NULL, -- Nome do usuário.
+	emausu varchar(100) NOT NULL, -- E-mail do usuário.
+	senusu varchar(32) NOT NULL, -- Senha do usuário.
+	codtipusu int4 NOT NULL, -- Código do tipo de usuário.
+	CONSTRAINT usuario_emausu_key UNIQUE (emausu),
+	CONSTRAINT usuario_pkey PRIMARY KEY (codusu),
+	CONSTRAINT fkusuario980722 FOREIGN KEY (codtipusu) REFERENCES tipo_usuario(codtipusu)
+);
+COMMENT ON TABLE public.usuario IS 'Cadastro de usuários.';
+
+-- Column comments
+
+COMMENT ON COLUMN public.usuario.codusu IS 'Código do usuário.';
+COMMENT ON COLUMN public.usuario.nomusu IS 'Nome do usuário.';
+COMMENT ON COLUMN public.usuario.emausu IS 'E-mail do usuário.';
+COMMENT ON COLUMN public.usuario.senusu IS 'Senha do usuário.';
+COMMENT ON COLUMN public.usuario.codtipusu IS 'Código do tipo de usuário.';
+
+-- Permissions
+
+ALTER TABLE public.usuario OWNER TO postgres;
+GRANT ALL ON TABLE public.usuario TO postgres;
+	
+-- Actual parameter values may differ, what you see is a default string representation of values
+INSERT INTO public.tipo_usuario (codtipusu,destipusu)
 VALUES (1,'admin');
 
-INSERT INTO public.usuario (nome,email,senha,tipousuario)
+-- Actual parameter values may differ, what you see is a default string representation of values
+INSERT INTO public.usuario (nomusu,emausu,senusu,codtipusu)
 VALUES ('joao','email@email.com','12345',1);
 

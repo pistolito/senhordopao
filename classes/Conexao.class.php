@@ -20,7 +20,7 @@ final class Conexao
             try {
                 self::$instance = new PDO("pgsql:host=localhost;dbname=padaria", // url
                     "postgres", // usuário
-                    "postgres" // senha
+                    "159159" // senha
                     );
                 self::$instance->setAttribute(
                     PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION
