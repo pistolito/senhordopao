@@ -203,7 +203,7 @@ insert
 	
 insert
 	into 
-		venda (codigo,venda,datavenda,valor)
+		venda (codigo,cliente,datavenda,valor)
 	values
 		(1,1,current_timestamp,50);
 
@@ -214,9 +214,6 @@ CREATE TABLE tipousuario (
 );
 COMMENT ON TABLE tipousuario IS 'Cadastro dos tipos de usuários: 1 - Admin, 2 - Operador, 3 - Consulta.';
 
-
-COMMENT ON COLUMN tipousuario.codigo IS 'Código do tipo de usuário.';
-COMMENT ON COLUMN tipousuario.usuario IS 'Descrição do tipo de usuário.';
 
 
 ALTER TABLE tipousuario OWNER TO postgres;
@@ -232,20 +229,12 @@ CREATE TABLE usuario (
 	PRIMARY KEY (codigo),
 	CONSTRAINT fkusuario980722 FOREIGN KEY (codigo) REFERENCES tipousuario(codigo)
 );
-COMMENT ON TABLE usuario IS 'Cadastro de usuários.';
-
-
-COMMENT ON COLUMN usuario.codigo IS 'Código do usuário.';
-COMMENT ON COLUMN usuario.nome IS 'nome do usuário.';
-COMMENT ON COLUMN usuario.email IS 'E-mail do usuário.';
-COMMENT ON COLUMN usuario.senha IS 'Senha do usuário.';
-COMMENT ON COLUMN usuario.tipousuario IS 'Código do tipo de usuário.';
 
 
 ALTER TABLE usuario OWNER TO postgres;
 GRANT ALL ON TABLE usuario TO postgres;
 	
-INSERT INTO tipousuario (codigo,tipo)
+INSERT INTO tipousuario (codigo,tipousuario)
 VALUES (1,'admin');
 
 INSERT INTO public.usuario (nome,email,senha,tipousuario)
