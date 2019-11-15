@@ -1,0 +1,253 @@
+create table
+	venda (codigo serial not null,	
+	cliente int4 not null,
+	datavenda timestamp not null,
+	valor numeric(7,2) not null,
+	primary key (codigo));
+
+create table
+	cargo (codigo serial not null,
+	funcao varchar(30) not null,
+	salario numeric(8,2),
+	primary key (codigo));
+
+create table
+	compra (codigo serial not null,
+	cnpj int4 not null,
+	datacompra timestamp not null,
+	valor numeric(7,2) not null,
+	primary key (codigo));
+
+create table
+	compraingrediente (codigo int4 not null,
+	ingrediente int4 not null,
+	quantidade numeric(9,2) not null,
+	valor numeric(7,2) not null,
+	primary key (codigo,ingrediente));
+
+create table
+	fornecedor (cnpj serial not null,
+	razaosocial varchar(100) not null,
+	rua varchar(50) not null,
+	bairro varchar(20) not null,
+	numeroendereco numeric(4) not null,
+	cep numeric(8) not null,
+	referencia varchar(50),
+	datacadastro timestamp not null,
+	dataexclusao timestamp default null,
+	datafundacao date,
+	primary key (cnpj));
+
+create table
+	ingrediente (codigo serial not null,
+	peso numeric(8,4) not null,
+	valor numeric(7,2) not null,
+	nome varchar(50) not null,
+	quantidade numeric(8,4) not null,
+	datacadastro timestamp not null,
+	dataexclusao timestamp default null,
+	primary key (codigo));
+
+create table
+	ingredientereceita (codigo int4 not null,
+	nome varchar(50) not null,
+	ingrediente int4 not null,
+	nomeingrediente varchar(50) not null,
+	dataproducao timestamp not null,
+	quantidade numeric(8,4) not null,
+	primary key (codigo,ingrediente));
+
+create table
+	pessoa (codigo serial not null,
+	nome varchar(100) not null,
+	cpf int4 not null,
+	data_nascimento date not null,
+	data_cadastro timestamp not null,
+	data_exclusao timestamp default null,
+	cargo int4 default(5),
+	primary key (codigo));
+
+comment on
+table
+	pessoa is 'tabela referente ao cadastro de pessoas.';
+
+create table
+	produto (codigo serial not null,
+	valor numeric(7,2) not null,
+	peso numeric(9,4) not null,
+	nome varchar(50) not null,
+	datacadastro timestamp not null,
+	dataexclusao timestamp default null,
+	primary key (codigo));
+
+create table
+	receita (codigo int4 not null,
+	ingrediente int4 not null,
+	quantidade numeric(8,4) not null,
+	valor numeric(7,2) not null,
+	dataexclusao timestamp default null,
+	primary key (codigo));
+
+create table
+	vendaproduto (codigo int4 not null,
+	produto int4 not null,
+	quantidade numeric(9,4) not null,
+	valor numeric(7,2) not null,
+	primary key (codigo,produto));
+
+alter table
+	ingredientereceita add constraint fkingredient390474 foreign key (codigo) references receita (codigo);
+
+alter table
+	ingredientereceita add constraint fkingredient489107 foreign key (ingrediente) references ingrediente (codigo);
+
+alter table
+	receita add constraint fkreceita489384 foreign key (codigo) references produto (codigo);
+
+alter table
+	compraingrediente add constraint fkcompra_ing819289 foreign key (codigo) references ingrediente (codigo);
+
+alter table
+	compraingrediente add constraint fkcompra_ing721886 foreign key (codigo) references compra (codigo);
+
+alter table
+	compra add constraint fkcompra29064 foreign key (cnpj) references fornecedor (cnpj);
+
+alter table
+	vendaproduto add constraint fkvenda_prod518759 foreign key (produto) references produto (codigo);
+
+alter table
+	vendaproduto add constraint fkvenda_prod323336 foreign key (codigo) references venda (codigo);
+
+alter table
+	venda add constraint fkvenda813640 foreign key (cliente) references pessoa (codigo);
+
+alter table
+	pessoa add constraint fkpessoa831278 foreign key (cargo) references cargo (codigo);
+
+comment on
+table
+	vendaproduto is 'tabela referente aos produtos de cada venda.';
+
+insert
+	into
+		cargo(funcao,salario)
+	values
+		('dono',5000);
+
+insert
+	into
+		cargo(funcao,salario)
+	values
+		('gerente',5000);
+
+insert
+	into
+		cargo(funcao,salario)
+	values
+		('padeiro',3500);
+
+insert
+	into
+		cargo(funcao,salario)
+	values
+        ('atendente',1500);
+
+insert 
+    into 
+        cargo(funcao, salario) 
+    values 
+        ('cliente', 0); 
+
+insert
+	into
+		pessoa(nome,cpf,data_nascimento,data_cadastro,codigo)
+	values
+		('joao',123456789,'03.05.1997','03.05.1997',1);
+	
+insert
+	into
+		fornecedor (cnpj,razaosocial,rua,bairro,numeroendereco,cep,datacadastro,datafundacao)
+	values
+		(123456789,'teste normal','rua rua','banana',666,89900000,'26.05.2019','26.05.2019');
+	
+insert
+	into
+		fornecedor (cnpj,razaosocial,rua,bairro,numeroendereco,cep,datacadastro,dataexclusao,datafundacao)
+	values
+		(987654321,'teste excluido','nao rua','burraco',123,98765432,'25.05.2019',current_timestamp,'25.05.2019');
+	
+insert
+	into
+		produto (valor,peso,nome,datacadastro)
+	values 
+		(5,5,'teste normal','26.05.2019');
+
+insert
+	into
+		produto (valor,peso,nome,datacadastro,dataexclusao)
+	values 
+		(6,6,'teste excluido','26.05.2019', current_timestamp);
+	
+insert
+	into
+		ingrediente (peso,valor,nome,quantidade,datacadastro)
+	values
+		(0.500,5,'teste normal',100,'26.05.2019');
+	
+insert
+	into
+		ingrediente (peso,valor,nome,quantidade,datacadastro,dataexclusao)
+	values
+		(1.500,5,'teste excluido',150,'26.05.2019',current_timestamp);
+	
+insert
+	into 
+		venda (codigo,venda,datavenda,valor)
+	values
+		(1,1,current_timestamp,50);
+
+CREATE TABLE tipousuario (
+	codigo serial NOT NULL, 
+	tipousuario varchar(20) NOT NULL, 
+	PRIMARY KEY (codigo)
+);
+COMMENT ON TABLE tipousuario IS 'Cadastro dos tipos de usuários: 1 - Admin, 2 - Operador, 3 - Consulta.';
+
+
+COMMENT ON COLUMN tipousuario.codigo IS 'Código do tipo de usuário.';
+COMMENT ON COLUMN tipousuario.usuario IS 'Descrição do tipo de usuário.';
+
+
+ALTER TABLE tipousuario OWNER TO postgres;
+GRANT ALL ON TABLE tipousuario TO postgres;
+	
+CREATE TABLE usuario (
+	codigo serial NOT NULL, 
+	nome varchar(40) NOT NULL, 
+	email varchar(100) NOT NULL, 
+	senha varchar(32) NOT NULL, 
+	tipousuario int4 NOT NULL, 
+	UNIQUE (email),
+	PRIMARY KEY (codigo),
+	CONSTRAINT fkusuario980722 FOREIGN KEY (codigo) REFERENCES tipousuario(codigo)
+);
+COMMENT ON TABLE usuario IS 'Cadastro de usuários.';
+
+
+COMMENT ON COLUMN usuario.codigo IS 'Código do usuário.';
+COMMENT ON COLUMN usuario.nome IS 'nome do usuário.';
+COMMENT ON COLUMN usuario.email IS 'E-mail do usuário.';
+COMMENT ON COLUMN usuario.senha IS 'Senha do usuário.';
+COMMENT ON COLUMN usuario.tipousuario IS 'Código do tipo de usuário.';
+
+
+ALTER TABLE usuario OWNER TO postgres;
+GRANT ALL ON TABLE usuario TO postgres;
+	
+INSERT INTO tipousuario (codigo,tipo)
+VALUES (1,'admin');
+
+INSERT INTO public.usuario (nome,email,senha,tipousuario)
+VALUES ('joao','email@email.com','12345',1);
+
