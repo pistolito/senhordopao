@@ -46,7 +46,7 @@ class VendaProdutoDAO extends BaseDAO
         }
     }
 
-    // Busca venda peloprutocod
+    // Busca venda pelo produtocod
     public function buscarVendaProdutoCod($codigo)
     {
         try {

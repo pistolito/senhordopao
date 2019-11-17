@@ -172,37 +172,37 @@ insert
 	
 insert
 	into
-		public.fornecedor (cnpj,nom,rua,bairro,endnum,cep,datcad,datfun)
+		fornecedor (cnpj,nom,rua,bairro,endnum,cep,datcad,datfun)
 	values
 		(123456789,'teste normal','rua rua','banana',666,89900000,'26.05.2019','26.05.2019');
 	
 insert
 	into
-		public.fornecedor (cnpj,nom,rua,bairro,endnum,cep,datcad,datex,datfun)
+		fornecedor (cnpj,nom,rua,bairro,endnum,cep,datcad,datex,datfun)
 	values
 		(987654321,'teste excluido','nao rua','burraco',123,98765432,'25.05.2019',current_timestamp,'25.05.2019');
 	
 insert
 	into
-		public.produto (preco,peso,nom,datcad)
+		produto (preco,peso,nom,datcad)
 	values 
 		(5,5,'teste normal','26.05.2019');
 
 insert
 	into
-		public.produto (preco,peso,nom,datcad,datex)
+		produto (preco,peso,nom,datcad,datex)
 	values 
 		(6,6,'teste excluido','26.05.2019', current_timestamp);
 	
 insert
 	into
-		public.ingrediente (peso,custo,nom,qnt,datcad)
+		ingrediente (peso,custo,nom,qnt,datcad)
 	values
 		(0.500,5,'teste normal',100,'26.05.2019');
 	
 insert
 	into
-		public.ingrediente (peso,custo,nom,qnt,datcad,datex)
+		ingrediente (peso,custo,nom,qnt,datcad,datex)
 	values
 		(1.500,5,'teste excluido',150,'26.05.2019',current_timestamp);
 	
@@ -211,25 +211,19 @@ insert
 		venda (pessoacod,codven,datven,valor)
 	values
 		(1,1,current_timestamp,50);
-	
--- DROP TABLE public.tipo_usuario;
 
-CREATE TABLE public.tipo_usuario (
+CREATE TABLE tipo_usuario (
 	codtipusu serial NOT NULL, -- Código do tipo de usuário.
 	destipusu varchar(20) NOT NULL, -- Descrição do tipo de usuário.
 	CONSTRAINT tipo_usuario_pkey PRIMARY KEY (codtipusu)
 );
-COMMENT ON TABLE public.tipo_usuario IS 'Cadastro dos tipos de usuários: 1 - Admin, 2 - Operador, 3 - Consulta.';
+COMMENT ON TABLE tipo_usuario IS 'Cadastro dos tipos de usuários: 1 - Admin, 2 - Operador, 3 - Consulta.';
 
--- Column comments
+COMMENT ON COLUMN tipo_usuario.codtipusu IS 'Código do tipo de usuário.';
+COMMENT ON COLUMN tipo_usuario.destipusu IS 'Descrição do tipo de usuário.';
 
-COMMENT ON COLUMN public.tipo_usuario.codtipusu IS 'Código do tipo de usuário.';
-COMMENT ON COLUMN public.tipo_usuario.destipusu IS 'Descrição do tipo de usuário.';
-
--- Permissions
-
-ALTER TABLE public.tipo_usuario OWNER TO postgres;
-GRANT ALL ON TABLE public.tipo_usuario TO postgres;
+ALTER TABLE tipo_usuario OWNER TO postgres;
+GRANT ALL ON TABLE tipo_usuario TO postgres;
 	
 CREATE TABLE public.usuario (
 	codusu serial NOT NULL, -- Código do usuário.
@@ -241,26 +235,20 @@ CREATE TABLE public.usuario (
 	CONSTRAINT usuario_pkey PRIMARY KEY (codusu),
 	CONSTRAINT fkusuario980722 FOREIGN KEY (codtipusu) REFERENCES tipo_usuario(codtipusu)
 );
-COMMENT ON TABLE public.usuario IS 'Cadastro de usuários.';
+COMMENT ON TABLE usuario IS 'Cadastro de usuários.';
 
--- Column comments
+COMMENT ON COLUMN usuario.codusu IS 'Código do usuário.';
+COMMENT ON COLUMN usuario.nomusu IS 'Nome do usuário.';
+COMMENT ON COLUMN usuario.emausu IS 'E-mail do usuário.';
+COMMENT ON COLUMN usuario.senusu IS 'Senha do usuário.';
+COMMENT ON COLUMN usuario.codtipusu IS 'Código do tipo de usuário.';
 
-COMMENT ON COLUMN public.usuario.codusu IS 'Código do usuário.';
-COMMENT ON COLUMN public.usuario.nomusu IS 'Nome do usuário.';
-COMMENT ON COLUMN public.usuario.emausu IS 'E-mail do usuário.';
-COMMENT ON COLUMN public.usuario.senusu IS 'Senha do usuário.';
-COMMENT ON COLUMN public.usuario.codtipusu IS 'Código do tipo de usuário.';
-
--- Permissions
-
-ALTER TABLE public.usuario OWNER TO postgres;
+ALTER TABLE usuario OWNER TO postgres;
 GRANT ALL ON TABLE public.usuario TO postgres;
-	
--- Actual parameter values may differ, what you see is a default string representation of values
-INSERT INTO public.tipo_usuario (codtipusu,destipusu)
+
+INSERT INTO tipo_usuario (codtipusu,destipusu)
 VALUES (1,'admin');
 
--- Actual parameter values may differ, what you see is a default string representation of values
-INSERT INTO public.usuario (nomusu,emausu,senusu,codtipusu)
+INSERT INTO usuario (nomusu,emausu,senusu,codtipusu)
 VALUES ('joao','email@email.com','12345',1);
 

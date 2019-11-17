@@ -20,7 +20,7 @@ class VendaDAO extends BaseDAO
         }
     }
 
-    // Busca venda pelo codven
+    // Busca venda pelo codigo da venda
     public function buscarVenda($dados)
     {
         try {
