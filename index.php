@@ -26,20 +26,20 @@ require 'sessao.php';
                     <a href="../index.php"><img src="img/logofull.png" height="200px" /></a>
                 </div>
                 <li>
-                    <a href="../pages/clienteform.php">Pessoas</a>
+                    <a href="pages/clienteform.php">Pessoas</a>
                 </li>
                 <li>
-                    <a href="../pages/fornecedorform.php">Fornecedores</a>
+                    <a href="pages/fornecedorform.php">Fornecedores</a>
                 </li>
                 <li>
-                    <a href="../pages/produtoform.php">Produtos</a>
+                    <a href="pages/produtoform.php">Produtos</a>
                 </li>
                 <li>
-                    <a href="../pages/receitaform.php">Receitas</a>
+                    <a href="pages/receitaform.php">Receitas</a>
                 </li>
 
                 <li>
-                    <a href="../login.php">Sair</a>
+                    <a href="login.php">Sair</a>
                 </li>
             </ul>
         </div>
