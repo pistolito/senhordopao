@@ -1,37 +1,37 @@
 <?php
-require '../sessao.php';
-require '../classes/vendaDAO.class.php';
+// require '../sessao.php';
+// require '../classes/vendaDAO.class.php';
 
-use padaria\dao\VendaDAO;
+// use padaria\dao\VendaDAO;
 
-//Criando e inserindo uma nova venda
+// //Criando e inserindo uma nova venda
 
-$VendaDAO = new VendaDAO();
+// $VendaDAO = new VendaDAO();
 
-if (isset($_REQUEST["operacao"])) {
-    $operacao = $_REQUEST["operacao"];
-    switch ($operacao) {
-        case "I":
-            // inserindo uma nova venda
-            $dados= array(($_POST["pessoacod"]),($_POST["valor"]));
-            $VendaDAO->novaVenda($dados);
-            break;       
-    }
-}
+// if (isset($_REQUEST["operacao"])) {
+//     $operacao = $_REQUEST["operacao"];
+//     switch ($operacao) {
+//         case "I":
+//             // inserindo uma nova venda
+//             $dados= array(($_POST["pessoacod"]),($_POST["valor"]));
+//             $VendaDAO->novaVenda($dados);
+//             break;       
+//     }
+// }
 
-$VendaProdutoDAO = new VendaProdutoDAO();
+// // $VendaProdutoDAO = new VendaProdutoDAO();
 
-if (isset($_REQUEST["operacao1"])) {
-    $operacao1 = $_REQUEST["operacao1"];
-    switch ($operacao1) {
-        case "I":
-            // inserindo um novo produto
-            $dados1= array(($_POST["codven"]),($_POST["procod"]),($_POST["qnt"]),($_POST["valor"]));
-            $VendaProdutoDAO->novaVendaProduto($dados1);
-            break;       
-    }
-}
-
+// if (isset($_REQUEST["operacao1"])) {
+//     $operacao1 = $_REQUEST["operacao1"];
+//     switch ($operacao1) {
+//         case "I":
+//             // inserindo um novo produto
+//             $dados1= array(($_POST["codven"]),($_POST["procod"]),($_POST["qnt"]),($_POST["valor"]));
+//             $VendaProdutoDAO->novaVendaProduto($dados1);
+//             break;       
+//     }
+// }
+?>
 <html>
 <head>
 <!-- Required meta tags -->
@@ -45,7 +45,7 @@ if (isset($_REQUEST["operacao1"])) {
 
 <script type="text/javascript" src="../js/funcoes.js"></script>
 
-<title>Ponto de Venda</title>
+<title>Senhor do Pão</title>
 </head>
 <body>
 	<!--  MENU -->
@@ -72,10 +72,7 @@ if (isset($_REQUEST["operacao1"])) {
             <li>
            	 	<a href="../pages/pontodevenda.php">Ponto de Venda</a>
             </li>
-            <li>
-                <!-- AREA DO DONO/GERENTE ACESSO RESTRITO CARGOS 1 E 2 -->
-    			<a href="../pages/cargoform.php">Cadastro de Cargos</a>
-            </li>
+
             <li>
                <a href="../login.php">Sair</a>
             </li>
@@ -97,7 +94,7 @@ if (isset($_REQUEST["operacao1"])) {
 				
         Valor Total: <input type="number" name="custo" required="required"value="<?=isset($venda) ? $venda['valor'] : ''?> "/> <br />
         
-        //É outra DAO não sei como fazer
+        <!-- //É outra DAO não sei como fazer -->
 
         Código Venda: <input type="number" name="procod" required="required"value="<?=isset($venda ? $venda['codven'] : ''?>" /> <br />
 		
