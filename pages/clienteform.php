@@ -136,15 +136,15 @@ if (isset($_REQUEST["operacao"])) {
                         <input type="hidden" name="operacao" value="<?= isset($operacao) ? $operacao : 'I' ?>">
                         <input name="cod" type="hidden" required="required" readonly="readonly" value="<?= isset($pessoa) ? $pessoa['cod'] : '' ?> " /> <br />
 
-                        &nbsp;&nbsp;  Nome: &nbsp;&nbsp;<input type="text" name="nom"  required="required" value="<?= isset($pessoa) ? $pessoa['nom'] : '' ?>" /> <br />
+                        &nbsp;&nbsp; Nome: &nbsp;&nbsp;<input type="text" name="nom" required="required" value="<?= isset($pessoa) ? $pessoa['nom'] : '' ?>" /> <br />
 
-                        &nbsp;&nbsp;  CPF: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="number" size="32" name="cpf" required="required" value="<?= isset($pessoa) ? $pessoa['cpf'] : '' ?> " /> <br />
+                        &nbsp;&nbsp; CPF: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="number" size="32" name="cpf" required="required" value="<?= isset($pessoa) ? $pessoa['cpf'] : '' ?> " /> <br />
 
-                        &nbsp;&nbsp;   Data de Nascimento: <input type="date" name="datnasc" required="required"  value="<?= isset($pessoa) ? $pessoa['datnasc'] : '' ?> " /> <br />
+                        &nbsp;&nbsp; Data de Nascimento: <input type="date" name="datnasc" required="required" value="<?= isset($pessoa) ? $pessoa['datnasc'] : '' ?> " /> <br />
 
-                        &nbsp;&nbsp;  Cargo: &nbsp;&nbsp;<input type="number" width="100px" name="cargocod" required="required" value="<?= isset($pessoa) ? $pessoa['cargocod'] : '' ?> " /> <br />
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp; Cargo: &nbsp;&nbsp;<input type="number" width="100px" name="cargocod" required="required" value="<?= isset($pessoa) ? $pessoa['cargocod'] : '' ?> " /> <br />
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <button name="btnSalvar" class="enviar" type="submit">Salvar</button>
 
                         <button name="btnLimpar" class="limpar" type="submit">Limpar</button>
